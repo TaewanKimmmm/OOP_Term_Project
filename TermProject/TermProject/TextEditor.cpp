@@ -4,6 +4,5 @@
 
 void TextEditor::run() {
 	std::cout << "TextEditor" << std::endl;
-	TextCutter *myTextCutter = new TextCutter;
-	myTextCutter->makeLines();
+	TextCutter::makeLines();
 }

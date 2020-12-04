@@ -2,11 +2,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+#include <vector>
 
 class TextCutter {
 private:
-	std::string loadTextFile();
+	TextCutter();
+	static std::string loadTextFile();
+	static std::vector<std::string> split(std::string input, char delimiter);
 
 public:
-	std::string makeLines();
+	static std::string makeLines();
 };

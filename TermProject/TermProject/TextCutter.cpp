@@ -1,5 +1,15 @@
 #include "TextCutter.h"
 
+std::string TextCutter::makeLines() {
+	std::string wholeText = loadTextFile();
+	std::vector<std::string> result = split(wholeText, ' ');
+	for (int i = 0; i < result.size(); i++) {
+		std::cout << result[i] << " " << std::endl;
+	}
+
+	return wholeText;
+}
+
 std::string TextCutter::loadTextFile() {
 	std::ifstream in("test.txt");;
 	std::string wholeText;
@@ -10,7 +20,6 @@ std::string TextCutter::loadTextFile() {
 		wholeText.resize(size);
 		in.seekg(0, std::ios::beg);
 		in.read(&wholeText[0], size);
-		//std::cout << s << std::endl;
 	}
 	else {
 		std::cout << "파일을 찾을 수 없습니다!" << std::endl;
@@ -18,7 +27,15 @@ std::string TextCutter::loadTextFile() {
 	return wholeText;
 }
 
-std::string TextCutter::makeLines() {
-	std::cout << this->loadTextFile() << std::endl;
-	
+std::vector<std::string> TextCutter::split(std::string input, char delimiter) {
+	std::vector<std::string> answer;
+	std::stringstream ss(input);
+	std::string temp;
+
+	while (getline(ss, temp, delimiter)) {
+		answer.push_back(temp);
+	}
+
+	return answer;
 }
+
