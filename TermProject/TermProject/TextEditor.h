@@ -13,9 +13,12 @@
 class TextEditor {
 
 private:
+	std::vector<Line> Lines;
+	void setLines(std::vector<Line> Lines);
 	void getUserInput();
 	void setCursorPosition(int x, int y);
-	void initialPrint(std::vector<Line> Lines);
+	void initialPrint();
+	void processUserInput(std::string userInput);
 
 public:
 	void run();
