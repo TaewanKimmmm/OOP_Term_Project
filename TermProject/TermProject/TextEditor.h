@@ -6,14 +6,14 @@
 #include <string>
 
 #include "Line.h"
-#include "Menu.h"
+#include "OutputView.h"
+#include "ConsoleMessage.h"
 
 
 class TextEditor {
 
 private:
 	void getUserInput();
-	void printBoundary();
 	void setCursorPosition(int x, int y);
 	void initialPrint(std::vector<Line> Lines);
 

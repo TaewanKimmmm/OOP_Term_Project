@@ -1,8 +1,13 @@
 #pragma once
 #include <string>
+#include <iostream>
+#include "OutputView.h"
+
 class ConsoleMessage {
 private:
-	static const std::string message;
-public:
+	ConsoleMessage();
+	static const std::string defaultMessage;
 
+public:
+	static void printMessage();
 };

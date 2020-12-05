@@ -142,14 +142,14 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ConsoleMessage.cpp" />
     <ClCompile Include="Line.cpp" />
-    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="OutputView.cpp" />
     <ClCompile Include="TextCutter.cpp" />
     <ClCompile Include="TextEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleMessage.h" />
     <ClInclude Include="Line.h" />
-    <ClInclude Include="Menu.h" />
+    <ClInclude Include="OutputView.h" />
     <ClInclude Include="TextCutter.h" />
     <ClInclude Include="TextEditor.h" />
   </ItemGroup>

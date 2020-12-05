@@ -5,8 +5,8 @@
 void TextEditor::run() {
 	std::vector<Line> Lines = TextCutter::makeLines();
 	initialPrint(Lines);
-	Menu::printMenu();
-	//printMessage();
+	OutputView::printMenu();
+	ConsoleMessage::printMessage();
 	getUserInput();
 }
 
@@ -15,7 +15,7 @@ void TextEditor::initialPrint(std::vector<Line> Lines) {
 		std::cout << std::setw(2) << std::right << (i + 1) << "| ";
 		Lines[i].print();
 	}
-	printBoundary();
+	OutputView::printBorderLine();
 }
 
 void TextEditor::setCursorPosition(int x, int y) {
@@ -28,18 +28,11 @@ void TextEditor::setCursorPosition(int x, int y) {
 void TextEditor::getUserInput() {
 	std::string s;
 	std::cout << "ют╥б : " << std::endl; 
-	printBoundary();
+	OutputView::printBorderLine();
 	setCursorPosition(7, 25);
 	while (1) {
 		std::cin >> s;
 		setCursorPosition(7, 25);
 	}	
-}
-
-void TextEditor::printBoundary() {
-	for (int i = 0; i < 80; i++) {
-		std::cout << "-";
-	}
-	std::cout << std::endl;
 }
 

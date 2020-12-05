@@ -30,7 +30,7 @@
     <ClCompile Include="ConsoleMessage.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
+    <ClCompile Include="OutputView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="ConsoleMessage.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h">
+    <ClInclude Include="OutputView.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

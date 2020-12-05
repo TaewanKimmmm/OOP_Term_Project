@@ -3,12 +3,13 @@
 #include <string>
 #include <iostream>
 
-class Menu {
+class OutputView {
 
 private:
 	static const std::string menu;
-	Menu();
+	OutputView();
 
 public:
 	static void printMenu();
+	static void printBorderLine();
 };
