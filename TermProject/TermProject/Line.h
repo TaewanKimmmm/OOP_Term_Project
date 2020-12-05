@@ -7,13 +7,14 @@ class Line {
 
 private:
 	static const int MAXIMUM_LENGTH= 75;
+
 	std::vector<std::string> words;
-	int length;
+	int byteLength;
 
 public:
 	Line(std::vector<std::string> words);
-	int size();
 	std::string get(int index);
+	int size();
 	void print();
 
 };

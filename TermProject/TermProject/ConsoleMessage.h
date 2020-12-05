@@ -9,5 +9,5 @@ private:
 	static const std::string defaultMessage;
 
 public:
-	static void printMessage();
+	static void printDefaultMessage();
 };
