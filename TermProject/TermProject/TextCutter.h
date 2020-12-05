@@ -16,7 +16,6 @@ private:
 	static std::string loadTextFile();
 	static std::vector<std::string> split(std::string input, char delimiter);
 	static std::vector<std::string> makeWords();
-	static void makeLine();
 
 public:
 	static std::vector<Line> makeLines();
