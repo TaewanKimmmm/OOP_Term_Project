@@ -4,5 +4,10 @@
 
 void TextEditor::run() {
 	std::cout << "TextEditor" << std::endl;
-	TextCutter::makeLines();
+	std::vector<Line> Lines = TextCutter::makeLines();
+
+	for (int i = 0; i < Lines.size(); i++) {
+		Lines[i].print();
+	}
+
 }

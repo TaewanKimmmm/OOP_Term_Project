@@ -1,13 +1,43 @@
 #include "TextCutter.h"
 
-std::string TextCutter::makeLines() {
-	std::string wholeText = loadTextFile();
-	std::vector<std::string> result = split(wholeText, ' ');
-	for (int i = 0; i < result.size(); i++) {
-		std::cout << result[i] << " " << std::endl;
+std::vector<Line> TextCutter::makeLines() {
+	std::vector<std::string> words = makeWords();
+	std::vector<Line> lines;
+	
+	int onlyWord = 0;
+	int wordCount = 0;
+	int start = 0;
+	int end = 0;
+
+	for (int i = 0; i < words.size(); i++) {
+		onlyWord += words[i].length();
+		wordCount += 1;
+
+		if (onlyWord + wordCount - 1 > 75) {
+			end = i-1;
+			lines.push_back(Line(std::vector<std::string>(words.begin() + start, words.begin() + end + 1)));
+			start = i;
+			onlyWord = words[i].length();
+			wordCount = 1;
+		}
+		else if (onlyWord + wordCount - 1 == 75) {
+			end = i;
+			lines.push_back(Line(std::vector<std::string>(words.begin() + start, words.begin() + end + 1)));
+			start = i+1;
+			onlyWord = 0;
+			wordCount = 0;
+		}
+		
 	}
 
-	return wholeText;
+	return lines;
+}
+
+std::vector<std::string> TextCutter::makeWords() {
+	std::string wholeText = loadTextFile();
+	std::vector<std::string> result = split(wholeText, ' ');
+
+	return result;
 }
 
 std::string TextCutter::loadTextFile() {
@@ -20,8 +50,7 @@ std::string TextCutter::loadTextFile() {
 		wholeText.resize(size);
 		in.seekg(0, std::ios::beg);
 		in.read(&wholeText[0], size);
-	}
-	else {
+	} else {
 		std::cout << "파일을 찾을 수 없습니다!" << std::endl;
 	}
 	return wholeText;
