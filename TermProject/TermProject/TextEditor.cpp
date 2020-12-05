@@ -1,13 +1,16 @@
 #include "TextEditor.h"
 #include "TextCutter.h"
-#include <iostream>
+
 
 void TextEditor::run() {
-	std::cout << "TextEditor" << std::endl;
 	std::vector<Line> Lines = TextCutter::makeLines();
+	initialPrint(Lines);
 
-	for (int i = 0; i < Lines.size(); i++) {
+}
+
+void TextEditor::initialPrint(std::vector<Line> Lines) {
+	for (int i = 0; i < 20; i++) {
+		std::cout << std::setw(2) << std::right << (i + 1) << "| ";
 		Lines[i].print();
 	}
-
 }
