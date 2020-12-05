@@ -14,9 +14,9 @@ private:
 	static const int SPACE = 1;
 	TextCutter();
 	static std::string loadTextFile();
-	static std::vector<std::string> split(std::string input, char delimiter);
 	static std::vector<std::string> makeWords();
 
 public:
+	static std::vector<std::string> split(std::string input, char delimiter);
 	static std::vector<Line> makeLines();
 };

@@ -4,10 +4,13 @@
 #include <iomanip>
 #include <windows.h>
 #include <string>
+#include <regex>
 
 #include "Line.h"
 #include "OutputView.h"
 #include "ConsoleMessage.h"
+#include "TextCutter.h"
+
 
 
 class TextEditor {
@@ -19,6 +22,7 @@ private:
 	void setCursorPosition(int x, int y);
 	void initialPrint();
 	void processUserInput(std::string userInput);
+	void validateUserInput(std::string userInput);
 
 public:
 	void run();
