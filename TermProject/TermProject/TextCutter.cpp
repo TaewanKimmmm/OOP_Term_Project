@@ -4,27 +4,27 @@ std::vector<Line> TextCutter::makeLines() {
 	std::vector<std::string> words = makeWords();
 	std::vector<Line> lines;
 	
-	int onlyWord = 0;
+	int wordLength = 0;
 	int wordCount = 0;
 	int start = 0;
 	int end = 0;
 
 	for (int i = 0; i < words.size(); i++) {
-		onlyWord += words[i].length();
+		wordLength += words[i].length();
 		wordCount += 1;
 
-		if (onlyWord + wordCount - 1 > 75) {
+		if (wordLength + wordCount - 1 > 75) {
 			end = i-1;
 			lines.push_back(Line(std::vector<std::string>(words.begin() + start, words.begin() + end + 1)));
 			start = i;
-			onlyWord = words[i].length();
+			wordLength = words[i].length();
 			wordCount = 1;
 		}
-		else if (onlyWord + wordCount - 1 == 75) {
+		else if (wordLength + wordCount - 1 == 75) {
 			end = i;
 			lines.push_back(Line(std::vector<std::string>(words.begin() + start, words.begin() + end + 1)));
 			start = i+1;
-			onlyWord = 0;
+			wordLength = 0;
 			wordCount = 0;
 		}
 		
