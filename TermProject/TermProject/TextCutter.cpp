@@ -27,9 +27,7 @@ std::vector<Line> TextCutter::makeLines() {
 			wordLength = 0;
 			wordCount = 0;
 		}
-		
 	}
-
 	return lines;
 }
 

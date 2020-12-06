@@ -8,6 +8,11 @@ Line::Line(std::vector<std::string> words) {
 	}
 }
 
+void Line::insertWord(int idx, std::string word) {
+	std::vector<std::string>::iterator it = this->words.begin();
+	this->words.insert(it +idx, word);
+}
+
 int Line::size() {
 	return this->words.size();
 }
@@ -22,3 +27,4 @@ void Line::print() {
 	}
 	std::cout << std::endl;
 }
+

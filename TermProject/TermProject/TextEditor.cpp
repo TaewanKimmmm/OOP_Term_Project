@@ -4,7 +4,6 @@
 
 void TextEditor::run() {
 	setLines(TextCutter::makeLines());
-	initialPrint();
 	getUserInput();
 }
 
@@ -12,8 +11,8 @@ void TextEditor::setLines(std::vector<Line> Lines) {
 	this->Lines = Lines;
 }
 
-void TextEditor::initialPrint() {
-	for (int i = 0; i < 20; i++) {
+void TextEditor::updateText() {
+	for (int i = this->startLine; i < this->endLine; i++) {
 		std::cout << std::setw(2) << std::right << (i + 1) << "| ";
 		this->Lines[i].print();
 	}
@@ -26,12 +25,13 @@ void TextEditor::getUserInput() {
 	std::string userInput;
 
 	do {
-		/*system("cls");*/
-		/*std::cout << "입력 : " << std::endl;
+		updateText();
+		std::cout << "입력 : " << std::endl;
 		OutputView::printBorderLine();
-		setCursorPosition(7, 25);*/
+		setCursorPosition(7, 25);
 		std::cin >> userInput;
 		processUserInput(userInput);
+		system("cls");
 
 	} while (!(userInput.length() == 1 && userInput[0] == 't'));
 	
@@ -59,8 +59,8 @@ void TextEditor::processUserInput(std::string userInput) {
 	} catch (std::string exception) {
 		std::cout << exception << "은 잘못된 형식입니다." << std::endl;
 	}
-	catch (std::exception) {
-		std::cout << "재입력 요망" << std::endl;
+	catch (std::exception e) {
+		std::cout << "재입력 요망! " << e.what() << std::endl;
 	}
 }
 
@@ -73,14 +73,13 @@ void TextEditor::validateUserInputFormat(std::string userInput) {
 	}
 }
 
-Line TextEditor::getLine(int lineNumber) {
-	return Lines.at(lineNumber - 1);
-}
-
 void TextEditor::insert(std::string trimmedInput) { // 삽입 시에.. 3개의 파라미터가 있어야 하고..숫자 숫자 문자열..
 	std::vector<std::string> result = TextCutter::split(trimmedInput, ',');
 	if (result.size() != 3) {
 		throw std::out_of_range("파라미터는 3개 입력해주세요");
+	}
+	if (result[2].length() > 75) {
+		throw std::out_of_range("추가하려는 단어가 너무 깁니다.");
 	}
 	int lineNumber = 0;
 	int wordNumber = 0;
@@ -92,13 +91,18 @@ void TextEditor::insert(std::string trimmedInput) { // 삽입 시에.. 3개의 파라미�
 	wordInt >> wordNumber;
 
 	validateInsert(lineNumber, wordNumber);
+
+
+	Line& selectedLine = Lines[lineNumber-1];
+	selectedLine.insertWord(wordNumber, result[2]);
+	selectedLine.print();
 }
 
 void TextEditor::validateInsert(int lineNumber, int wordNumber) {
 	if (lineNumber <= 0 || lineNumber > 20) {
 		throw std::out_of_range("줄 번호는 1과 20 사이여야 합니다.");
 	}
-	if (wordNumber <= 0 || wordNumber > getLine(lineNumber).size()) {
+	if (wordNumber <= 0 || wordNumber > Lines[lineNumber-1].size()) {
 		throw std::out_of_range("단어가 존재하지 않습니다.");
 	}
 }

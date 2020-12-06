@@ -16,5 +16,6 @@ public:
 	std::string get(int index);
 	int size();
 	void print();
+	void insertWord(int idx, std::string word);
 
 };
