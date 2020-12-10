@@ -19,8 +19,6 @@ class TextEditor {
 private:
 	int startLine = 0;
 	int endLine = 20;
-	int totalPage = 0;
-	int currentPage = 1;
 
 	ConsoleMessage* consoleMessage;
 
