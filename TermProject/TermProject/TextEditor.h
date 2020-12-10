@@ -32,7 +32,7 @@ private:
 	std::string trimParenthesisFromUserInput(std::string userInput);
 	
 	void insert(std::string trimmedInput);
-	void checkBytesFromInsertedLine(int lineNumber);
+	void AdjustAfterInsertionOfLine(int lineNumber);
 
 public:
 	void run();

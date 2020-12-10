@@ -5,7 +5,6 @@
 void TextEditor::run() {
 	setLines(TextCutter::makeLines());
 	this->consoleMessage = new ConsoleMessage();
-	//this->lines[0].removeWord(1);
 	getUserInput();
 }
 
@@ -98,8 +97,7 @@ void TextEditor::insert(std::string trimmedInput) {
 
 	Line& selectedLine = lines[lineNumber-1];
 	selectedLine.insertWord(wordNumber, result[2]);
-	checkBytesFromInsertedLine(lineNumber);
-	//std::cout << selectedLine.getByteLength() << std::endl;
+	AdjustAfterInsertionOfLine(lineNumber);
 }
 
 void TextEditor::validateInsert(int lineNumber, int wordNumber) {
@@ -111,11 +109,10 @@ void TextEditor::validateInsert(int lineNumber, int wordNumber) {
 	}
 }
 
-void TextEditor::checkBytesFromInsertedLine(int lineNumber) {
+void TextEditor::AdjustAfterInsertionOfLine(int lineNumber) {
 	if (this->lines[lineNumber - 1].getByteLength() <= 75) {
 		return;
 	} else {
-		
 		if (lineNumber == this->lines.size()) {
 			Line* newLine = new Line();
 			this->lines.push_back(*newLine);
@@ -129,7 +126,7 @@ void TextEditor::checkBytesFromInsertedLine(int lineNumber) {
 				nextLine.insertWord(0, presentLine.get(presentLine.size() - 1));
 				presentLine.removeWord(presentLine.size() - 1); // 마지막 단어 제거
 			}
-			checkBytesFromInsertedLine(lineNumber + 1);
+			AdjustAfterInsertionOfLine(lineNumber + 1);
 		}
 	}	
 }
