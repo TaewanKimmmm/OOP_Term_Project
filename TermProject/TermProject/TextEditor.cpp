@@ -5,7 +5,9 @@
 void TextEditor::run() {
 	setLines(TextCutter::makeLines());
 	this->consoleMessage = new ConsoleMessage();
+	this->totalPage = ( this->lines.size() / 20 ) + 1; // TODO insert delte change시 다 바꿔줘야..
 	getUserInput();
+	delete consoleMessage;
 }
 
 void TextEditor::setLines(std::vector<Line> lines) {
@@ -44,7 +46,11 @@ void TextEditor::processUserInput(std::string userInput) {
 	
 	try {
 		validateUserInputFormat(userInput); 
-		std::string trimmedInput = trimParenthesisFromUserInput(userInput);
+		std::string trimmedInput;
+		
+		if (!(userInput[0] == 'n' || userInput[0] == 'p')) {
+			trimParenthesisFromUserInput(userInput);
+		}
 
 		switch (userInput[0]) {
 			case 'i':
@@ -55,6 +61,12 @@ void TextEditor::processUserInput(std::string userInput) {
 			case 'c':
 				break;
 			case 's':
+				break;
+			case 'p':
+				showPreviousPage();
+				break;
+			case 'n':
+				showNextPage();
 				break;
 		}
 
@@ -70,7 +82,9 @@ void TextEditor::processUserInput(std::string userInput) {
 void TextEditor::validateUserInputFormat(std::string userInput) {
 	std::regex textAction("^[cdis]\\(([^)]+)\\)$");
 	std::regex pageMove("^[np]");
+	std::cout << userInput << std::endl;
 
+	std::cout << std::regex_match(userInput, pageMove) << std::endl;
 	if (std::regex_match(userInput, textAction) == 0 && std::regex_match(userInput, pageMove) == 0) {
 		throw userInput;
 	}
@@ -116,6 +130,7 @@ void TextEditor::AdjustAfterInsertionOfLine(int lineNumber) {
 		if (lineNumber == this->lines.size()) {
 			Line* newLine = new Line();
 			this->lines.push_back(*newLine);
+			delete newLine;
 		}
 
 		Line& presentLine = lines[lineNumber - 1];
@@ -129,6 +144,34 @@ void TextEditor::AdjustAfterInsertionOfLine(int lineNumber) {
 			AdjustAfterInsertionOfLine(lineNumber + 1);
 		}
 	}	
+}
+
+void TextEditor::showPreviousPage() {
+	//if (this->endLine <= 20) {
+	if (this->currentPage == 1) {
+		throw std::out_of_range("현재 페이지가 첫 페이지입니다.");
+	}
+	this->startLine -= 20;
+	this->endLine -= 20;
+	
+	//if (startLine < 19) {
+
+	//}
+}
+
+void TextEditor::showNextPage() {
+	if (this->endLine == lines.size()) {
+		throw std::out_of_range("현재 페이지가 마지막 페이지입니다.");
+	}
+	else if (this->endLine + 20 > lines.size()) {
+		this->endLine = lines.size();
+		this->startLine = this->endLine - 20;
+	}
+	else {
+		this->startLine += 20;
+		this->endLine += 20;
+	}
+	this->currentPage += 1;
 }
 
 std::string TextEditor::trimParenthesisFromUserInput(std::string userInput) {

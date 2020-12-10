@@ -19,6 +19,9 @@ class TextEditor {
 private:
 	int startLine = 0;
 	int endLine = 20;
+	int totalPage = 0;
+	int currentPage = 1;
+
 	ConsoleMessage* consoleMessage;
 
 	std::vector<Line> lines;
@@ -33,6 +36,8 @@ private:
 	
 	void insert(std::string trimmedInput);
 	void AdjustAfterInsertionOfLine(int lineNumber);
+	void showPreviousPage();
+	void showNextPage();
 
 public:
 	void run();
