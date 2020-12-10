@@ -1,10 +1,19 @@
 #include "ConsoleMessage.h"
 
-const std::string ConsoleMessage::defaultMessage = "(콘솔메시지)";
+//const std::string ConsoleMessage::defaultMessage = "(콘솔메시지)";
 
-void ConsoleMessage::printDefaultMessage() {
-	std::cout << defaultMessage << std::endl;
+ConsoleMessage::ConsoleMessage() {
+	this->message = "(콘솔메시지)";
+}
+
+void ConsoleMessage::printMessage() {
+	std::cout << this->message << std::endl;
 	OutputView::printBorderLine();
+}
+
+void ConsoleMessage::setMessage(std::string inputMessage)
+{
+	this->message = inputMessage;
 }
 
 

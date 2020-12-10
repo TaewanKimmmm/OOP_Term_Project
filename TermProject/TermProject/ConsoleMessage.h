@@ -5,9 +5,10 @@
 
 class ConsoleMessage {
 private:
-	ConsoleMessage();
-	static const std::string defaultMessage;
+	std::string message;
 
 public:
-	static void printDefaultMessage();
+	ConsoleMessage();
+	void printMessage();
+	void setMessage(std::string inputMessage);
 };
