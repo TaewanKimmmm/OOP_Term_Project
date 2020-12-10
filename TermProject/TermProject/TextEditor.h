@@ -19,8 +19,9 @@ class TextEditor {
 private:
 	int startLine = 0;
 	int endLine = 20;
+	ConsoleMessage* consoleMessage;
 
-	std::vector<Line> Lines;
+	std::vector<Line> lines;
 	void setLines(std::vector<Line> Lines);
 	void getUserInput();
 	void setCursorPosition(int x, int y);
@@ -31,6 +32,7 @@ private:
 	std::string trimParenthesisFromUserInput(std::string userInput);
 	
 	void insert(std::string trimmedInput);
+	void checkBytesFromInsertedLine(int lineNumber);
 
 public:
 	void run();

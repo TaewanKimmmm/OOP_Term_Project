@@ -1,5 +1,9 @@
 #include "Line.h"
 
+Line::Line() {
+	this->byteLength = 0;
+}
+
 Line::Line(std::vector<std::string> words) {
 	this->words = words;
 	this->byteLength = words.size() - 1;
@@ -11,6 +15,14 @@ Line::Line(std::vector<std::string> words) {
 void Line::insertWord(int idx, std::string word) {
 	std::vector<std::string>::iterator it = this->words.begin();
 	this->words.insert(it +idx, word);
+	this->byteLength += word.length() + 1;
+}
+
+void Line::removeWord(int idx) {
+
+	this->byteLength -= (words[idx].length() + 1);
+	std::vector<std::string>::iterator it = this->words.begin();
+	this->words.erase(words.begin() + idx);
 }
 
 int Line::size() {
@@ -19,6 +31,10 @@ int Line::size() {
 
 std::string Line::get(int index) {
 	return this->words[index];
+}
+
+int Line::getByteLength() {
+	return this->byteLength;
 }
 
 void Line::print() {

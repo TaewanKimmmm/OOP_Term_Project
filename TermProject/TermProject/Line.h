@@ -12,10 +12,13 @@ private:
 	int byteLength;
 
 public:
+	Line();
 	Line(std::vector<std::string> words);
 	std::string get(int index);
 	int size();
 	void print();
 	void insertWord(int idx, std::string word);
+	void removeWord(int idx);
+	int getByteLength();
 
 };
