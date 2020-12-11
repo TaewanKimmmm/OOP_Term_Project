@@ -25,6 +25,12 @@ void Line::removeWord(int idx) {
 	this->words.erase(words.begin() + idx);
 }
 
+int Line::searchWord(std::string word) {
+	std::vector<std::string>::iterator it;
+	int indexOfWord = std::find(words.begin(), words.end(), word) - words.begin();
+	return indexOfWord;
+}
+
 int Line::size() {
 	return this->words.size();
 }

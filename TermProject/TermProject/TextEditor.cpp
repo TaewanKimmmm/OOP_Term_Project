@@ -60,6 +60,7 @@ void TextEditor::processUserInput(std::string userInput) {
 			case 'c':
 				break;
 			case 's':
+				search(trimmedInput);
 				break;
 			case 'p':
 				showPreviousPage();
@@ -84,6 +85,22 @@ void TextEditor::validateUserInputFormat(std::string userInput) {
 
 	if (std::regex_match(userInput, textAction) == 0 && std::regex_match(userInput, pageMove) == 0) {
 		throw userInput;
+	}
+}
+
+void TextEditor::search(std::string trimmedInput) {
+	
+	for (int i = 0; i < lines.size(); i++) {
+		if (lines[i].size() != lines[i].searchWord(trimmedInput)) {
+			startLine = i;
+			if (this->startLine + 20 > lines.size()) {
+				this->endLine = lines.size();
+			}
+			else {
+				this->endLine = this->startLine + 20;
+			}
+			break;
+		}
 	}
 }
 

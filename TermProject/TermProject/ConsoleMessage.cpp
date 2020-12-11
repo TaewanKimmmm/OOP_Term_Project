@@ -3,7 +3,7 @@
 //const std::string ConsoleMessage::defaultMessage = "(콘솔메시지)";
 
 ConsoleMessage::ConsoleMessage() {
-	this->message = "(콘솔메시지)";
+	this->message = "(콘솔 메시지)";
 }
 
 void ConsoleMessage::printMessage() {

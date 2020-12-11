@@ -6,6 +6,7 @@
 #include <string>
 #include <regex>
 #include <sstream>
+#include <algorithm>
 
 #include "Line.h"
 #include "OutputView.h"
@@ -32,7 +33,8 @@ private:
 	void validateUserInputFormat(std::string userInput);
 	void validateInsert(int lineNumber, int wordNumber);
 	std::string trimParenthesisFromUserInput(std::string userInput);
-	
+
+	void search(std::string trimmedInput);
 	void insert(std::string trimmedInput);
 	void AdjustAfterInsertionOfLine(int lineNumber);
 	void showPreviousPage();

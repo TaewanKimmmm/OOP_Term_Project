@@ -19,6 +19,7 @@ public:
 	void print();
 	void insertWord(int idx, std::string word);
 	void removeWord(int idx);
+	int searchWord(std::string word);
 	int getByteLength();
 
 };
