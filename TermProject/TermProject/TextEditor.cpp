@@ -14,8 +14,8 @@ void TextEditor::setLines(std::vector<Line> lines) {
 }
 
 void TextEditor::updateText() {
-	for (int i = this->startLine; i < this->endLine; i++) {
-		std::cout << std::setw(2) << std::right << (i + 1) << "| ";
+	for (int i = this->startLine; i < this->endLine; i++) { // 0 ~ 19
+		std::cout << std::setw(2) << std::right << i + 1 << "| ";
 		this->lines[i].print();
 	}
 	OutputView::printBorderLine();
@@ -48,7 +48,7 @@ void TextEditor::processUserInput(std::string userInput) {
 		std::string trimmedInput;
 		
 		if (!(userInput[0] == 'n' || userInput[0] == 'p')) {
-			trimParenthesisFromUserInput(userInput);
+			trimmedInput = trimParenthesisFromUserInput(userInput);
 		}
 
 		switch (userInput[0]) {
@@ -112,8 +112,8 @@ void TextEditor::insert(std::string trimmedInput) {
 }
 
 void TextEditor::validateInsert(int lineNumber, int wordNumber) {
-	if (lineNumber <= 0 || lineNumber > 20) {
-		throw std::out_of_range("줄 번호는 1과 20 사이여야 합니다.");
+	if (lineNumber <= startLine || lineNumber > endLine) {
+		throw std::out_of_range("현재 출력창에 존재하지 않는 줄 번호입니다.");
 	}
 	if (wordNumber <= 0 || wordNumber > lines[lineNumber-1].size()) {
 		throw std::out_of_range("해당 위치에 단어가 존재하지 않습니다.");
