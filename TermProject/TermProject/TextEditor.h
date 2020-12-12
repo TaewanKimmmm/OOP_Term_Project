@@ -42,6 +42,7 @@ private:
 	void adjustAfterDeletionOfWord(int lineNumber);
 	void showPreviousPage();
 	void showNextPage();
+	void saveFile();
 
 public:
 	void run();

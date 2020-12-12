@@ -2,6 +2,7 @@
 #include "TextCutter.h"
 
 
+
 void TextEditor::run() {
 	setLines(TextCutter::makeLines());
 	this->consoleMessage = new ConsoleMessage();
@@ -37,8 +38,9 @@ void TextEditor::getUserInput() {
 		system("cls");
 
 	} while (!(userInput.length() == 1 && userInput[0] == 't'));
-	
+
 	// 이후 파일 저장 후 종료
+	saveFile();
 }
 
 void TextEditor::processUserInput(std::string userInput) {
@@ -285,6 +287,21 @@ void TextEditor::showNextPage() {
 	else {
 		this->startLine += 20;
 		this->endLine += 20;
+	}
+}
+
+void TextEditor::saveFile() {
+	std::ofstream out("text.txt");
+
+	if (out.is_open()) {
+		for (int i = 0; i < lines.size(); i++) {
+			for (int j = 0; j < lines[i].size(); j++) {
+				out << this->lines[i].get(j);
+				if (!(i == lines.size() - 1 && j == lines[i].size() - 1)) {
+					out << " ";
+				}
+			}
+		}
 	}
 }
 
