@@ -56,8 +56,10 @@ void TextEditor::processUserInput(std::string userInput) {
 				insert(trimmedInput);
 				break;
 			case 'd':
+				remove(trimmedInput);
 				break;
 			case 'c':
+				change(trimmedInput);
 				break;
 			case 's':
 				search(trimmedInput);
@@ -89,9 +91,12 @@ void TextEditor::validateUserInputFormat(std::string userInput) {
 }
 
 void TextEditor::search(std::string trimmedInput) {
+
+	bool isExist = false;
 	
 	for (int i = 0; i < lines.size(); i++) {
 		if (lines[i].size() != lines[i].searchWord(trimmedInput)) {
+			isExist = true;
 			startLine = i;
 			if (this->startLine + 20 > lines.size()) {
 				this->endLine = lines.size();
@@ -101,6 +106,10 @@ void TextEditor::search(std::string trimmedInput) {
 			}
 			break;
 		}
+	}
+
+	if (isExist == false) {
+		throw std::exception("존재하지 않는 단어입니다.");
 	}
 }
 
@@ -121,14 +130,100 @@ void TextEditor::insert(std::string trimmedInput) {
 	lineInt >> lineNumber;
 	wordInt >> wordNumber;
 
-	validateInsert(lineNumber, wordNumber);
+	validateLineWord(lineNumber, wordNumber);
 
 	Line& selectedLine = lines[lineNumber-1];
 	selectedLine.insertWord(wordNumber, result[2]);
-	AdjustAfterInsertionOfLine(lineNumber);
+	adjustAfterInsertionOfWord(lineNumber);
 }
 
-void TextEditor::validateInsert(int lineNumber, int wordNumber) {
+void TextEditor::remove(std::string trimmedInput) {
+	std::vector<std::string> result = TextCutter::split(trimmedInput, ',');
+	if (result.size() != 2) {
+		throw std::exception("파라미터는 2개 입력해주세요");
+	}
+
+	int lineNumber = 0;
+	int wordNumber = 0;
+
+	std::stringstream lineInt(result[0]);
+	std::stringstream wordInt(result[1]);
+
+	lineInt >> lineNumber;
+	wordInt >> wordNumber;
+
+	validateLineWord(lineNumber, wordNumber);
+
+	Line& selectedLine = lines[lineNumber - 1];
+	selectedLine.removeWord(wordNumber - 1); //현재 라인에서 단어 지웠음
+	adjustAfterDeletionOfWord(lineNumber); // 다음 라인부터 조정 시작..
+}
+
+void TextEditor::change(std::string trimmedInput) {
+	std::vector<std::string> result = TextCutter::split(trimmedInput, ',');
+	if (result.size() != 2) {
+		throw std::exception("파라미터는 2개 입력해주세요");
+	}
+
+	std::string target = result[0];
+	std::string manufactured = result[1];
+
+	bool isExist = false;
+
+	for (int i = 0; i < lines.size(); i++) {
+		int targetIndex = lines[i].searchWord(target);
+		if (lines[i].size() != targetIndex) {
+			isExist = true;
+			Line& presentLine = lines[i];
+
+			presentLine.removeWord(targetIndex);
+			presentLine.insertWord(targetIndex, manufactured);
+
+			if (target.length() > manufactured.length()) {
+				adjustAfterDeletionOfWord(i+1);
+			}
+			else if (target.length() < manufactured.length()) {
+				adjustAfterInsertionOfWord(i+1);
+			}
+		}
+	}
+
+	if (isExist == false) {
+		throw std::exception("존재하지 않는 단어입니다.");
+	}
+}
+
+void TextEditor::adjustAfterDeletionOfWord(int lineNumber) { //lineNumber - 1이 현재 라인임.. 
+	if (lineNumber < lines.size()) { // 다음 라인이 존재한다면
+		Line& presentLine = lines[lineNumber - 1]; //현재 라인
+		Line& nextLine = lines[lineNumber]; // 다음 라인
+
+		while (presentLine.getByteLength() + nextLine.get(0).length() + 1 <= 75) {
+			std::string fuck = nextLine.get(0);
+			presentLine.insertWord(presentLine.size(), fuck);
+			nextLine.removeWord(0);
+			if (nextLine.size() == 0) {
+				this->lines.erase(lines.begin() + lineNumber);
+				if (this->endLine == this->lines.size() + 1) {
+					this->startLine -= 1;
+					this->endLine -= 1;
+				}
+				break;
+			}
+		}
+		adjustAfterDeletionOfWord(lineNumber + 1);
+	}
+	else if (lineNumber == lines.size()){
+		Line& presentLine = lines[lineNumber - 1];
+		if (presentLine.size() == 0) {
+			this->lines.erase(lines.begin() + lineNumber-1);
+			this->startLine -= 1;
+			this->endLine -= 1;
+		}
+	}
+}
+
+void TextEditor::validateLineWord(int lineNumber, int wordNumber) {
 	if (lineNumber <= startLine || lineNumber > endLine) {
 		throw std::out_of_range("현재 출력창에 존재하지 않는 줄 번호입니다.");
 	}
@@ -137,13 +232,17 @@ void TextEditor::validateInsert(int lineNumber, int wordNumber) {
 	}
 }
 
-void TextEditor::AdjustAfterInsertionOfLine(int lineNumber) {
+void TextEditor::adjustAfterInsertionOfWord(int lineNumber) {
 	if (this->lines[lineNumber - 1].getByteLength() <= 75) {
 		return;
 	} else {
 		if (lineNumber == this->lines.size()) {
 			Line* newLine = new Line();
 			this->lines.push_back(*newLine);
+			if (this->endLine == this->lines.size()-1) {
+				this->startLine += 1;
+				this->endLine += 1;
+			}
 			delete newLine;
 		}
 
@@ -155,7 +254,7 @@ void TextEditor::AdjustAfterInsertionOfLine(int lineNumber) {
 				nextLine.insertWord(0, presentLine.get(presentLine.size() - 1));
 				presentLine.removeWord(presentLine.size() - 1); // 마지막 단어 제거
 			}
-			AdjustAfterInsertionOfLine(lineNumber + 1);
+			adjustAfterInsertionOfWord(lineNumber + 1);
 		}
 	}	
 }

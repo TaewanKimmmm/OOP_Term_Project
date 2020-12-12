@@ -31,12 +31,15 @@ private:
 	void updateText();
 	void processUserInput(std::string userInput);
 	void validateUserInputFormat(std::string userInput);
-	void validateInsert(int lineNumber, int wordNumber);
+	void validateLineWord(int lineNumber, int wordNumber);
 	std::string trimParenthesisFromUserInput(std::string userInput);
 
 	void search(std::string trimmedInput);
 	void insert(std::string trimmedInput);
-	void AdjustAfterInsertionOfLine(int lineNumber);
+	void remove(std::string trimmedInput);
+	void change(std::string trimmedInput);
+	void adjustAfterInsertionOfWord(int lineNumber);
+	void adjustAfterDeletionOfWord(int lineNumber);
 	void showPreviousPage();
 	void showNextPage();
 
