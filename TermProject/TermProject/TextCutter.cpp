@@ -49,7 +49,7 @@ std::string TextCutter::loadTextFile() {
 		in.seekg(0, std::ios::beg);
 		in.read(&wholeText[0], size);
 	} else {
-		std::cout << "파일을 찾을 수 없습니다!" << std::endl;
+		std::cout << "?뚯씪??李얠쓣 ???놁뒿?덈떎!" << std::endl;
 	}
 	return wholeText;
 }

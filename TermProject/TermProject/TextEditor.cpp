@@ -271,7 +271,7 @@ void TextEditor::showPreviousPage() {
 	}
 	else {
 		this->startLine -= 20;
-		this->endLine -= 20;
+		this->endLine = startLine + 20;
 	}
 
 }

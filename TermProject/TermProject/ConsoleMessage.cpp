@@ -1,9 +1,9 @@
 #include "ConsoleMessage.h"
 
-//const std::string ConsoleMessage::defaultMessage = "(ÄÜ¼Ö¸Þ½ÃÁö)";
+//const std::string ConsoleMessage::defaultMessage = "(ì½˜ì†”ë©”ì‹œì§€)";
 
 ConsoleMessage::ConsoleMessage() {
-	this->message = "(ÄÜ¼Ö ¸Þ½ÃÁö)";
+	this->message = "(ì½˜ì†” ë©”ì‹œì§€)";
 }
 
 void ConsoleMessage::printMessage() {

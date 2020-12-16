@@ -7,7 +7,6 @@ class Line {
 
 private:
 	static const int MAXIMUM_LENGTH= 75;
-
 	std::vector<std::string> words;
 	int byteLength;
 

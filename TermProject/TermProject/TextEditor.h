@@ -21,7 +21,6 @@ private:
 	int startLine = 0;
 	int endLine = 20;
 
-
 	ConsoleMessage* consoleMessage;
 
 	std::vector<Line> lines;
